@@ -30,6 +30,10 @@ public class NEIRecipeExpansionFilter {
     }
 
     public Optional<String> decisiveRule(ItemStack itemStack) {
+        if (itemStack == null || itemStack.getItem() == null) {
+            return Optional.empty();
+        }
+
         String pattern;
         pattern = itemStackNEIName(itemStack).toLowerCase(Locale.ROOT);
         if (inclusionOverrides.contains(pattern)) return Optional.of("!" + pattern);
@@ -49,6 +53,10 @@ public class NEIRecipeExpansionFilter {
     }
 
     public void toggleRestriction(ItemStack itemStack) {
+        if (itemStack == null || itemStack.getItem() == null) {
+            return;
+        }
+
         Optional<String> rule = decisiveRule(itemStack);
         if (!rule.isPresent()) {
             exclusionPatterns.add(itemStackNEIName(itemStack).toLowerCase(Locale.ROOT));
@@ -108,6 +116,10 @@ public class NEIRecipeExpansionFilter {
     }
 
     public static String itemStackOredictName(ItemStack itemStack) {
+        if (itemStack == null) {
+            return "";
+        }
+
         StringBuilder builder = new StringBuilder();
 
         for (int id : OreDictionary.getOreIDs(itemStack)) {
@@ -126,11 +138,19 @@ public class NEIRecipeExpansionFilter {
     }
 
     public static String itemStackID(ItemStack itemStack) {
+        if (itemStack == null || itemStack.getItem() == null) {
+            return "";
+        }
+
         return itemStack.getItem().delegate.name()
             + (itemStack.getItemDamage() != 0 ? "/" + itemStack.getItemDamage() : "");
     }
 
     public static String itemStackNEIName(ItemStack itemStack) {
+        if (itemStack == null) {
+            return "";
+        }
+
         return SearchField.getEscapedSearchText(itemStack);
     }
 

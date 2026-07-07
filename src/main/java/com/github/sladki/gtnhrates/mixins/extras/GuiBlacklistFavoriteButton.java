@@ -63,7 +63,7 @@ public class GuiBlacklistFavoriteButton extends GuiRecipeButton {
                 break;
             }
         }
-        this.recipeResult = recipeResult;
+        this.recipeResult = recipeResult != null ? recipeResult : stack;
         updateButton();
     }
 
